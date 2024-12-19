@@ -1,5 +1,6 @@
 /// Importar la librería
 import axios from 'axios';  
+import { Move, PokeapiResponse } from '../interfaces/pokeapi-response.interface';
 
 export class Pokemon {
     get imageUrl() {
@@ -17,11 +18,10 @@ export class Pokemon {
         console.log(`${this.name} speaks!`);
     }
 
-    /// promesa, que consulta la información del pokemon
-    async getMoves() {
-        const {data} = await axios.get<string>('https://pokeapi.co/api/v2/pokemon/4');
-
-        return data.moves
+    //- promesa, que consulta la información del pokemon
+    async getMoves(): Promise<Move[]> { /// esto es opcional si lo ponemos ts nos fuerza a retornar lo que dijimos aquí
+        const {data} = await axios.get<PokeapiResponse>('https://pokeapi.co/api/v2/pokemon/4');
+        return data.moves; 
     }
 }
 
