@@ -1,13 +1,21 @@
 import axios from 'axios';
 
-/// Definimos un modulo que se encarga de gestionar las solicitudes a la api
-export class PokeApiAdapter {
+///1) Aca definimos los métodos y propiedades que debe tener la clase no me interesa com llegas del punto a al punto b
+export interface HttpAdaptar {
+    // es como ponerme reglas, entonces get recibe un genérico y es una promesa que retorna un genérico
+    get<T>(url: string): Promise<T>;
+}
+
+//!2) LISTO, si no tiene el método get te marca error
+export class PokeApiAdapter implements HttpAdaptar {
     private readonly axios = axios;
 
 
-    //- solo implementamos el que vamos a user, los demás son de ejemplo
-    async get(url: string) {
-        const { data } = await this.axios.get(url);
+    // Es un estándar poner T como el primer genérico o algo asi, y ya asi podemos pasarle interfaces a el retorno cuando usemos el método
+    async get<T>(url: string) {
+
+        //-Aca decimos que la data es de tipo T
+        const { data } = await this.axios.get<T>(url);
         return data;
     }
 
@@ -24,3 +32,12 @@ export class PokeApiAdapter {
     }
 }
 
+export class PokeApiFetchAdapter implements HttpAdaptar {
+    async get<T>(url: string): Promise<T> {
+        const resp = await fetch(url);
+
+        const data : T = await resp.json();
+
+        return data;
+    }
+}

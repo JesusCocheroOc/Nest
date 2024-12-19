@@ -1,5 +1,5 @@
 
-import { PokeApiAdapter } from '../api/pokeApi.adapter';
+import { HttpAdaptar, PokeApiAdapter, PokeApiFetchAdapter } from '../api/pokeApi.adapter';
 import {
     Move,
     PokeapiResponse,
@@ -13,8 +13,8 @@ export class Pokemon {
     constructor(
         public readonly id: number,
         public name: string,
-        private readonly http: PokeApiAdapter
-    ) // Todo: inyectar dependencias
+        private readonly http: HttpAdaptar ///3) Ponemos una interfaz en ves de una clase
+    )
 
     {}
 
@@ -27,16 +27,18 @@ export class Pokemon {
     }
 
     async getMoves(): Promise<Move[]> {
-        
-        const data =  await this.http.get('https://pokeapi.co/api/v2/pokemon/4');
+
+        /// Ya pide la interfaz de el objeto
+        const data =  await this.http.get<PokeapiResponse>('https://pokeapi.co/api/v2/pokemon/4');
         console.log(data.moves);
 
         return data.moves;
     }
 }
 
-const pokeApi = new PokeApiAdapter();
-
-export const charmander = new Pokemon(4, 'Charmander', pokeApi);
+const pokeApiFetch = new PokeApiFetchAdapter();
+const pokeApiAxios = new PokeApiAdapter();
+//- Marca error en el siguiente ejercicio lo resolvemos
+export const charmander = new Pokemon(4, 'Charmander', pokeApiFetch);
 
 charmander.getMoves();
