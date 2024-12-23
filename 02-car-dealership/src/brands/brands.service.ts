@@ -56,7 +56,7 @@ export class BrandsService {
   }
 
   /// Método para cargar las marcas
-  fillCarsWithSeesData(brands: Brand[]) {
+  fillBrandsWithSeesData(brands: Brand[]) {
     this.brands = brands;
   }
 }

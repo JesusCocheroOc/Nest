@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Car } from './interfaces/car.interface';
-///1 Importamos el generador de isd
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 
-// solo es una clase que permite inyecciones
+/// solo es una clase que permite inyecciones, Injectable significa que es un provider
 @Injectable()
 export class CarsService {
   private cars: Car[] = [];

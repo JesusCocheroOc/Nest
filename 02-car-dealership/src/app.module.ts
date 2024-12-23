@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { CarsController } from './cars/cars.controller';
-import { CarsService } from './cars/cars.service';
 import { BrandsModule } from './brands/brands.module';
 import { SeedModule } from './seed/seed.module';
+import { CarsModule } from './cars/cars.module';
 
+/// El app lo agonizamos de esta forma, se supone que esto se hace automático pero por si las moscas
 @Module({
-  imports: [BrandsModule, SeedModule],
-  controllers: [CarsController],
-  providers: [CarsService],
+  imports: [CarsModule, BrandsModule, SeedModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
